@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DARK THEME  (default — :root)
+   Deep navy-slate, electric violet/cyan accents, premium glass panels
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Base palette — deep slate-navy with blue-purple undertone */
+  --c-bg:           8 8 18;              /* #080812 — deep space */
+  --c-panel:        14 14 30;            /* #0e0e1e — glass panel */
+  --c-panel-solid:  18 18 36;            /* #121224 — solid panel */
+  --c-border:       99 102 241;          /* #6366f1 — indigo */
+  --c-primary:      238 238 255;         /* #eeeeff — near-white with blue tint */
+  --c-muted:        148 163 184;         /* #94a3b8 — slate-400 */
+  --c-accent:       167 139 250;         /* #a78bfa — violet-400 */
+  --c-shadow-glass: 0 4px 32px rgba(99, 102, 241, 0.28);
+
+  /* Glow effects */
+  --glow-accent:    0 0 20px rgba(167, 139, 250, 0.4);
+  --glow-cyan:      0 0 20px rgba(34, 211, 238, 0.4);
+  --glow-error:     0 0 20px rgba(248, 113, 113, 0.4);
+
+  /* Canvas helpers — read by JS in canvas components */
+  --c-canvas-bg:       transparent;
+  --c-canvas-grid:     rgba(99, 102, 241, 0.12);
+  --c-canvas-zeroline: rgba(148, 163, 184, 0.3);
+  --c-canvas-label:    #eeeeff;
+  --c-canvas-legend:   #94a3b8;
+  --c-canvas-bar-true: rgba(148, 163, 184, 0.2);
+  --c-canvas-bar-est:  #a78bfa;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LIGHT THEME  ([data-theme="light"])
+   Crisp white + soft platinum, deep indigo accents, sharp shadows
+   ═══════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  --c-bg:           248 247 255;         /* #f8f7ff — warm white-lavender */
+  --c-panel:        255 255 255;         /* #ffffff — pure white card */
+  --c-panel-solid:  251 250 255;         /* #fbfaff — off-white */
+  --c-border:       199 210 254;         /* #c7d2fe — indigo-200 */
+  --c-primary:      15 15 30;            /* #0f0f1e — near-black */
+  --c-muted:        99 102 120;          /* #636278 — slate-muted */
+  --c-accent:       99 102 241;          /* #6366f1 — indigo-500 */
+  --c-shadow-glass: 0 2px 16px rgba(99, 102, 241, 0.10), 0 1px 3px rgba(0,0,0,0.06);
+
+  --glow-accent:    0 0 12px rgba(99, 102, 241, 0.2);
+  --glow-cyan:      0 0 12px rgba(6, 182, 212, 0.2);
+  --glow-error:     0 0 12px rgba(239, 68, 68, 0.2);
+
+  /* Canvas helpers */
+  --c-canvas-bg:       transparent;
+  --c-canvas-grid:     rgba(99, 102, 241, 0.08);
+  --c-canvas-zeroline: rgba(99, 102, 241, 0.18);
+  --c-canvas-label:    #0f0f1e;
+  --c-canvas-legend:   #636278;
+  --c-canvas-bar-true: rgba(99, 102, 241, 0.15);
+  --c-canvas-bar-est:  #6366f1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════ */
+@layer base {
+  html {
+    @apply antialiased;
+    background-color: rgb(var(--c-bg));
+    background-image:
+      radial-gradient(ellipse 80% 60% at 10% 5%,  rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 95%, rgba(167, 139, 250, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
+    background-attachment: fixed;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  html[data-theme="light"] {
+    background-image:
+      radial-gradient(ellipse 70% 50% at 5% 10%,  rgba(99, 102, 241, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 95% 90%, rgba(167, 139, 250, 0.06) 0%, transparent 55%);
+  }
+
+  body {
+    color: rgb(var(--c-primary));
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: color 0.4s ease;
+    min-height: 100vh;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PANEL / CARD GLASS EFFECT
+   ═══════════════════════════════════════════════════════════════════════ */
+.glass-panel {
+  background: rgb(var(--c-panel) / 0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgb(var(--c-border) / 0.25);
+  box-shadow: var(--c-shadow-glass);
+}
+
+[data-theme="light"] .glass-panel {
+  background: rgb(var(--c-panel) / 0.95);
+  border: 1px solid rgb(var(--c-border) / 0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CUSTOM RANGE SLIDER
+   ═══════════════════════════════════════════════════════════════════════ */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 4px;
+  background: rgb(var(--c-border) / 0.3);
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(var(--c-accent));
+  border: 2px solid rgb(var(--c-panel));
+  box-shadow: 0 0 6px rgb(var(--c-accent) / 0.5);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgb(var(--c-accent) / 0.7);
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: linear-gradient(to right, rgb(var(--c-accent) / 0.6), rgb(var(--c-border) / 0.25));
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--c-border) / 0.4); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-accent) / 0.6); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   KATEX OVERRIDE
+   ═══════════════════════════════════════════════════════════════════════ */
+.katex * {
+  color: rgb(var(--c-primary)) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THEME TRANSITION
+   ═══════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+/* Exclude transforms/opacity from the global transition so animations still work */
+canvas, svg, .no-transition {
+  transition: none !important;
+}
