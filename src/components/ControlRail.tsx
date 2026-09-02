@@ -81,9 +81,12 @@ export const ControlRail: React.FC<ControlRailProps> = ({
 
         <Divider />
 
-        {/* ROOM MODEL */}
+{/* ROOM MODEL */}
         <div className="shrink-0 py-3">
           <SectionLabel icon={<Activity size={11} />} label="Actual Room (Echo Path)" />
+          <p className="text-[10px] text-muted/70 mb-3 leading-snug px-1">
+            <b>Hint:</b> Change these to simulate the physical room. The filter will have to adapt!
+          </p>
           <div className="flex flex-col gap-2">
             <Fader
               label="Echo Delay (N)"
@@ -102,7 +105,7 @@ export const ControlRail: React.FC<ControlRailProps> = ({
 
         <Divider />
 
-        {/* ESTIMATION MODULE */}
+{/* ESTIMATION MODULE */}
         <div className="flex-1 flex flex-col py-3">
           <div className="flex items-center justify-between mb-2">
             <SectionLabel icon={<Wand2 size={11} />} label="Echo Estimator & Canceller" />
@@ -116,6 +119,11 @@ export const ControlRail: React.FC<ControlRailProps> = ({
               {cancellerOn ? 'ON' : 'OFF'}
             </button>
           </div>
+
+          <p className="text-[10px] text-muted/70 mb-3 leading-snug px-1 mt-2">
+            <b>Hint:</b> The LMS algorithm continuously updates its coefficients to reduce the error.
+          </p>
+
           
           <div className="flex flex-col gap-2 mb-4">
             

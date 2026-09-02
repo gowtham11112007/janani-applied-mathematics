@@ -5,6 +5,7 @@ interface OscilloscopePlotProps {
   yMin?: number;
   yMax?: number;
   title: string;
+  hint?: string;
 }
 
 /** Read a CSS custom property from :root / html element at runtime (theme-aware). */
@@ -15,7 +16,8 @@ export const OscilloscopePlot: React.FC<OscilloscopePlotProps> = ({
   dataSets,
   yMin = -2,
   yMax = 2,
-  title
+  title,
+  hint
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -72,6 +74,14 @@ export const OscilloscopePlot: React.FC<OscilloscopePlotProps> = ({
       ctx.fillStyle = cssVar('--c-canvas-label');
       ctx.font = '14px "JetBrains Mono", monospace';
       ctx.fillText(title, 10, 18);
+
+      // Hint
+      if (hint) {
+        ctx.fillStyle = cssVar('--c-canvas-legend');
+        ctx.font = '12px "JetBrains Mono", monospace';
+        ctx.fillText(hint, 10, 36);
+      }
+
 
       // ── Legend ───────────────────────────────────────────────────────
       let legendY = 18;

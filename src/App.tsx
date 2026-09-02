@@ -174,6 +174,7 @@ function EchoApp() {
           <div className="grid grid-cols-2 grid-rows-2 gap-4 flex-1 min-h-0">
             <OscilloscopePlot
               title="1. Original x[n] vs Received y[n]"
+              hint="Hint: Received y[n] is Original + Delayed/Attenuated Echo"
               dataSets={[
                 { data: plotData.current.d, color: '#f472b6', label: 'Received y[n]' },
                 { data: plotData.current.x, color: '#34d399', label: 'Original x[n]' },
@@ -181,6 +182,7 @@ function EchoApp() {
             />
             <OscilloscopePlot
               title="2. Estimated Echo ê[n] vs Received y[n]"
+              hint="Hint: Adaptive Filter generates ê[n] to guess the echo shape"
               dataSets={[
                 { data: plotData.current.d,    color: '#f472b6', label: 'Received y[n]' },
                 { data: plotData.current.yHat, color: '#c084fc', label: 'Est Echo ê[n] + x[n]' },
@@ -188,6 +190,7 @@ function EchoApp() {
             />
             <TapWeightsPlot 
               title="3. Adaptive Filter (Finding Delay N & α)"
+              hint="Hint: Uses Cross-Correlation to automatically find exact delay (N)"
               trueTaps={(() => {
                 const arr = Array(40).fill(0);
                 if (trueDelay < 40) arr[trueDelay] = trueAlpha;
@@ -197,6 +200,7 @@ function EchoApp() {
             />
             <OscilloscopePlot
               title="4. Cleaned Signal (Error e[n])"
+              hint="Hint: e[n] = y[n] - ê[n]. We want this to match Original x[n] exactly!"
               yMin={-1.5} yMax={1.5}
               dataSets={[
                 { data: plotData.current.e, color: '#fb7185', label: 'Cleaned e[n] ≈ x[n]' },

@@ -3,7 +3,8 @@ import React, { useRef, useEffect } from 'react';
 interface TapWeightsPlotProps {
   trueTaps: number[];
   estimatedTaps: number[];
-  title?: string;
+  title: string;
+  hint?: string;
 }
 
 const cssVar = (name: string): string =>
@@ -12,7 +13,8 @@ const cssVar = (name: string): string =>
 export const TapWeightsPlot: React.FC<TapWeightsPlotProps> = ({
   trueTaps,
   estimatedTaps,
-  title = 'Tap Weights: h[k] vs ŵ[k]'
+  title = 'Tap Weights: h[k] vs ŵ[k]',
+  hint
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -79,6 +81,14 @@ export const TapWeightsPlot: React.FC<TapWeightsPlotProps> = ({
       ctx.fillStyle = cssVar('--c-canvas-label');
       ctx.font = '14px "JetBrains Mono", monospace';
       ctx.fillText(title, 10, 18);
+
+      // Hint
+      if (hint) {
+        ctx.fillStyle = cssVar('--c-canvas-legend');
+        ctx.font = '12px "JetBrains Mono", monospace';
+        ctx.fillText(hint, 10, 36);
+      }
+
 
       // Legend
       ctx.font = '13px "JetBrains Mono"';
