@@ -185,7 +185,7 @@ function EchoApp() {
               hint="Hint: Adaptive Filter generates ê[n] to guess the echo shape"
               dataSets={[
                 { data: plotData.current.d,    color: '#f472b6', label: 'Received y[n]' },
-                { data: plotData.current.yHat, color: '#c084fc', label: 'Est Echo ê[n] + x[n]' },
+                { data: plotData.current.yHat, color: '#c084fc', label: 'Est Echo ê[n]' },
               ]}
             />
             <TapWeightsPlot 

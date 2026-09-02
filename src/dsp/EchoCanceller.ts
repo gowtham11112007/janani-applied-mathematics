@@ -66,9 +66,10 @@ export class AdaptiveFilter {
     }
     const stepSize = this.mu / norm;
 
-    for (let i = 0; i < this.weights.length; i++) {
+for (let i = 0; i < this.weights.length; i++) {
       this.weights[i] += stepSize * error * this.xBuffer[i];
     }
+    this.weights[0] = 0; // CRITICAL: Prevent cancelling the original signal x[n]
 
     return { estimatedEcho: y_hat, error };
   }
