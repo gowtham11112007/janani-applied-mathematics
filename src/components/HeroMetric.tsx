@@ -62,11 +62,11 @@ export const HeroMetric: React.FC<HeroMetricProps> = ({ erle, alphaErr, delayErr
         {/* Param Errors */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex justify-between items-center w-24">
-            <span className="text-xs font-mono text-muted uppercase">Δ Delay</span>
+            <span className="text-xs font-mono text-muted uppercase">Δ N</span>
             <span className={`text-lg font-mono font-bold ${delayErr === 0 ? 'text-trace1' : 'text-trace3'}`}>{delayErr}</span>
           </div>
           <div className="flex justify-between items-center w-24">
-            <span className="text-xs font-mono text-muted uppercase">Δ Atten</span>
+            <span className="text-xs font-mono text-muted uppercase">Δ α</span>
             <span className={`text-lg font-mono font-bold ${alphaErr < 0.05 ? 'text-trace1' : 'text-trace3'}`}>{alphaErr.toFixed(2)}</span>
           </div>
         </div>

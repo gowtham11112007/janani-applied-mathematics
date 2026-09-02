@@ -54,14 +54,14 @@ export const SystemEquations: React.FC<SystemEquationsProps> = ({ trueAlpha, tru
         </span>
       </div>
 
-      <EqCard label="Room Z-Transform" math="H(z) = 1 + \alpha z^{-D}" />
+      <EqCard label="Echo Z-Transform" math="H(z) = 1 + \alpha z^{-N}" />
 
-      <EqCard label="Canceller Model" math="\hat{y}[n] = \hat{\alpha} \cdot x[n - \hat{D}]" />
+      <EqCard label="Echo Estimation" math="\hat{e}[n] = \hat{\alpha} x[n - \hat{N}]" />
 
-      <EqCard label="Error Signal" math="E(z) = D(z) - \hat{Y}(z)">
+      <EqCard label="Error Signal" math="e[n] = y[n] - \hat{e}[n]">
         <div className="flex items-center justify-center gap-4">
           <LiveVal label="Δα" value={alphaErr.toFixed(2)} colorClass={alphaErr < 0.05 ? 'text-trace1' : 'text-trace3'} />
-          <LiveVal label="ΔD" value={String(delayErr)} colorClass={delayErr === 0 ? 'text-trace1' : 'text-trace3'} />
+          <LiveVal label="ΔN" value={String(delayErr)} colorClass={delayErr === 0 ? 'text-trace1' : 'text-trace3'} />
         </div>
       </EqCard>
 

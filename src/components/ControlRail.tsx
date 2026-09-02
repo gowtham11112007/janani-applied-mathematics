@@ -8,9 +8,7 @@ interface ControlRailProps {
   trueAlpha: number;
   setTrueAlpha: (val: number) => void;
   estDelay: number;
-  setEstDelay: (val: number) => void;
   estAlpha: number;
-  setEstAlpha: (val: number) => void;
   cancellerOn: boolean;
   setCancellerOn: (val: boolean) => void;
   adaptiveMode: boolean;
@@ -32,8 +30,8 @@ const Divider = () => <div className="h-px bg-border opacity-30 my-1" />;
 export const ControlRail: React.FC<ControlRailProps> = ({
   trueDelay, setTrueDelay,
   trueAlpha, setTrueAlpha,
-  estDelay, setEstDelay,
-  estAlpha, setEstAlpha,
+  estDelay,
+  estAlpha,
   cancellerOn, setCancellerOn,
   adaptiveMode, setAdaptiveMode,
   playing, setPlaying,
@@ -88,13 +86,13 @@ export const ControlRail: React.FC<ControlRailProps> = ({
           <SectionLabel icon={<Activity size={11} />} label="Actual Room (Echo Path)" />
           <div className="flex flex-col gap-2">
             <Fader
-              label="Delay D (Samples)"
+              label="Echo Delay (N)"
               value={trueDelay} min={1} max={40} step={1}
               onChange={setTrueDelay}
               accentClass="accent-trace2"
             />
             <Fader
-              label="Attenuation α"
+              label="Echo Attenuation (α)"
               value={trueAlpha} min={-1} max={1} step={0.05}
               onChange={setTrueAlpha}
               accentClass="accent-trace2"
@@ -120,18 +118,20 @@ export const ControlRail: React.FC<ControlRailProps> = ({
           </div>
           
           <div className="flex flex-col gap-2 mb-4">
-            <Fader
-              label="Est. Delay D̂"
-              value={estDelay} min={1} max={40} step={1}
-              onChange={(v) => !adaptiveMode && setEstDelay(v)}
-              accentClass="accent-trace4"
-            />
-            <Fader
-              label="Est. Attenuation α̂"
-              value={estAlpha} min={-1} max={1} step={0.05}
-              onChange={(v) => !adaptiveMode && setEstAlpha(v)}
-              accentClass="accent-trace4"
-            />
+            
+            <div className="flex flex-col gap-3 mb-4 p-3 rounded-lg bg-panelSolid border border-border/20">
+            <div className="text-[10px] font-mono text-muted uppercase tracking-widest mb-1">Adaptive Filter Estimates</div>
+            
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-mono text-muted">Est. Delay (N̂)</span>
+              <span className="text-sm font-mono font-bold text-trace4">{estDelay}</span>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-mono text-muted">Est. Atten (α̂)</span>
+              <span className="text-sm font-mono font-bold text-trace4">{estAlpha.toFixed(2)}</span>
+            </div>
+          </div>
           </div>
 
           <button

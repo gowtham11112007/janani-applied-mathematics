@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ControlRail } from './components/ControlRail';
 import { OscilloscopePlot } from './components/OscilloscopePlot';
-import { ImpulseResponsePlot } from './components/ImpulseResponsePlot';
-import { MagnitudeResponse } from './components/MagnitudeResponse';
-import { PoleZeroPlot } from './components/PoleZeroPlot';
 import { HeroMetric } from './components/HeroMetric';
 import { SystemEquations } from './components/SystemEquations';
 import { SignalGenerator, DelayLine, MetricCalculator, AdaptiveFilter } from './dsp/EchoCanceller';
@@ -20,7 +17,7 @@ function EchoApp() {
   // ── UI State ────────────────────────────────────────────────────────────────
   const [playing, setPlaying]         = useState(true);
   const [cancellerOn, setCancellerOn] = useState(true);
-  const [adaptiveMode, setAdaptiveMode] = useState(false);
+  const [adaptiveMode, setAdaptiveMode] = useState(true);
   
   const [trueDelay, setTrueDelay]     = useState(15);
   const [trueAlpha, setTrueAlpha]     = useState(0.6);
@@ -156,8 +153,8 @@ function EchoApp() {
         <ControlRail
           trueDelay={trueDelay} setTrueDelay={setTrueDelay}
           trueAlpha={trueAlpha} setTrueAlpha={setTrueAlpha}
-          estDelay={estDelay} setEstDelay={setEstDelay}
-          estAlpha={estAlpha} setEstAlpha={setEstAlpha}
+          estDelay={estDelay}
+          estAlpha={estAlpha}
           cancellerOn={cancellerOn} setCancellerOn={setCancellerOn}
           adaptiveMode={adaptiveMode} setAdaptiveMode={setAdaptiveMode}
           playing={playing} setPlaying={setPlaying}
@@ -174,54 +171,38 @@ function EchoApp() {
             />
           </div>
 
-          <div className="grid grid-cols-3 grid-rows-2 gap-3 flex-1 min-h-0">
+          <div className="grid grid-cols-2 grid-rows-2 gap-4 flex-1 min-h-0">
             <OscilloscopePlot
-              title="x[n] vs d[n]   Near-end vs Mic"
+              title="1. Original x[n] vs Received y[n]"
               dataSets={[
-                { data: plotData.current.d, color: '#f472b6', label: 'Mic d[n]' },
-                { data: plotData.current.x, color: '#34d399', label: 'Near-end x[n]' },
+                { data: plotData.current.d, color: '#f472b6', label: 'Received y[n]' },
+                { data: plotData.current.x, color: '#34d399', label: 'Original x[n]' },
               ]}
             />
             <OscilloscopePlot
-              title="y_hat[n] vs d[n]   Estimated vs Mic"
+              title="2. Estimated Echo ê[n] vs Received y[n]"
               dataSets={[
-                { data: plotData.current.d,    color: '#f472b6', label: 'Mic d[n]' },
-                { data: plotData.current.yHat, color: '#c084fc', label: 'Est Echo + x[n]' },
+                { data: plotData.current.d,    color: '#f472b6', label: 'Received y[n]' },
+                { data: plotData.current.yHat, color: '#c084fc', label: 'Est Echo ê[n] + x[n]' },
               ]}
             />
+            <TapWeightsPlot 
+              title="3. Adaptive Filter (Finding Delay N & α)"
+              trueTaps={(() => {
+                const arr = Array(40).fill(0);
+                if (trueDelay < 40) arr[trueDelay] = trueAlpha;
+                return arr;
+              })()}
+              estimatedTaps={Array.from(dsp.current.adaptive.weights).slice(0, 40)}
+            />
             <OscilloscopePlot
-              title="e[n]   Transmitted (Error) Signal"
+              title="4. Cleaned Signal (Error e[n])"
               yMin={-1.5} yMax={1.5}
               dataSets={[
-                { data: plotData.current.e, color: '#fb7185', label: 'Transmitted e[n]' },
+                { data: plotData.current.e, color: '#fb7185', label: 'Cleaned e[n] ≈ x[n]' },
               ]}
             />
-            
-            <ImpulseResponsePlot
-              trueAlpha={trueAlpha} trueDelay={trueDelay}
-              estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
-            />
-            <MagnitudeResponse
-              trueAlpha={trueAlpha} trueDelay={trueDelay}
-              estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
-            />
-            {adaptiveMode ? (
-              <TapWeightsPlot 
-                trueTaps={(() => {
-                  const arr = Array(40).fill(0);
-                  if (trueDelay < 40) arr[trueDelay] = trueAlpha;
-                  return arr;
-                })()}
-                estimatedTaps={Array.from(dsp.current.adaptive.weights).slice(0, 40)}
-              />
-            ) : (
-              <PoleZeroPlot
-                trueAlpha={trueAlpha} trueDelay={trueDelay}
-                estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
-              />
-            )}
           </div>
-
           <div className="shrink-0 mt-3">
             <SystemEquations
               trueAlpha={trueAlpha} trueDelay={trueDelay}
