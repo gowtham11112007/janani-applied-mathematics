@@ -37,13 +37,13 @@
    Crisp white + soft platinum, deep indigo accents, sharp shadows
    ═══════════════════════════════════════════════════════════════════════ */
 [data-theme="light"] {
-  --c-bg:           248 247 255;         /* #f8f7ff — warm white-lavender */
+  --c-bg:           240 242 245;         /* #f8f7ff — warm white-lavender */
   --c-panel:        255 255 255;         /* #ffffff — pure white card */
-  --c-panel-solid:  251 250 255;         /* #fbfaff — off-white */
-  --c-border:       199 210 254;         /* #c7d2fe — indigo-200 */
+  --c-panel-solid:  248 250 252;         /* #fbfaff — off-white */
+  --c-border:       203 213 225;         /* #c7d2fe — indigo-200 */
   --c-primary:      15 15 30;            /* #0f0f1e — near-black */
   --c-muted:        99 102 120;          /* #636278 — slate-muted */
-  --c-accent:       99 102 241;          /* #6366f1 — indigo-500 */
+  --c-accent:       37 99 235;          /* #6366f1 — indigo-500 */
   --c-shadow-glass: 0 2px 16px rgba(99, 102, 241, 0.10), 0 1px 3px rgba(0,0,0,0.06);
 
   --glow-accent:    0 0 12px rgba(99, 102, 241, 0.2);
@@ -75,11 +75,7 @@
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  html[data-theme="light"] {
-    background-image:
-      radial-gradient(ellipse 70% 50% at 5% 10%,  rgba(99, 102, 241, 0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 95% 90%, rgba(167, 139, 250, 0.06) 0%, transparent 55%);
-  }
+  html[data-theme="light"] { background-image: none; }
 
   body {
     color: rgb(var(--c-primary));
