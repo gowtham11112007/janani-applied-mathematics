@@ -70,7 +70,7 @@ export const OscilloscopePlot: React.FC<OscilloscopePlotProps> = ({
 
       // ── Title ────────────────────────────────────────────────────────
       ctx.fillStyle = cssVar('--c-canvas-label');
-      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.font = '14px "JetBrains Mono", monospace';
       ctx.fillText(title, 10, 18);
 
       // ── Legend ───────────────────────────────────────────────────────

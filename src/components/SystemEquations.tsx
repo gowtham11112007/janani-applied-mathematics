@@ -8,7 +8,7 @@ const K: React.FC<KSpanProps> = ({ math }) => {
   useEffect(() => {
     if (ref.current) katex.render(math, ref.current, { throwOnError: false, displayMode: false });
   }, [math]);
-  return <span ref={ref} className="text-[10px]" />;
+  return <span ref={ref} className="text-base" />;
 };
 
 interface SystemEquationsProps {
@@ -24,7 +24,7 @@ const EqCard: React.FC<{ label: string; math: string; children?: React.ReactNode
     className="flex flex-col justify-between flex-1 min-w-0 rounded-lg border border-border/20 px-3 py-2"
     style={{ background: 'rgb(var(--c-panel-solid) / 0.6)' }}
   >
-    <div className="text-[8px] font-mono uppercase tracking-widest text-muted mb-1">{label}</div>
+    <div className="text-xs font-mono uppercase tracking-widest text-muted mb-1">{label}</div>
     <div className="flex items-center justify-center overflow-hidden">
       <K math={math} />
     </div>
@@ -34,8 +34,8 @@ const EqCard: React.FC<{ label: string; math: string; children?: React.ReactNode
 
 const LiveVal: React.FC<{ label: string; value: string; colorClass: string }> = ({ label, value, colorClass }) => (
   <div className="flex items-center gap-1.5">
-    <span className="text-[8px] font-mono text-muted">{label}</span>
-    <span className={`text-[10px] font-mono font-bold ${colorClass}`}>{value}</span>
+    <span className="text-xs font-mono text-muted">{label}</span>
+    <span className={`text-sm font-mono font-bold ${colorClass}`}>{value}</span>
   </div>
 );
 
@@ -49,7 +49,7 @@ export const SystemEquations: React.FC<SystemEquationsProps> = ({ trueAlpha, tru
       style={{ background: 'rgb(var(--c-panel) / 0.8)', backdropFilter: 'blur(16px)' }}
     >
       <div className="flex flex-col items-center justify-center px-2 border-r border-border/15 pr-3 min-w-max">
-        <span className="text-[8px] font-mono uppercase tracking-[0.18em] text-muted rotate-[-90deg] whitespace-nowrap">
+        <span className="text-xs font-mono uppercase tracking-[0.18em] text-muted rotate-[-90deg] whitespace-nowrap">
           System Eqs
         </span>
       </div>

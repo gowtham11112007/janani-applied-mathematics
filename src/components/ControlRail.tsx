@@ -21,7 +21,7 @@ interface ControlRailProps {
 const SectionLabel: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label }) => (
   <div className="flex items-center gap-1.5 mb-2">
     <span className="text-accent opacity-70">{icon}</span>
-    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-muted font-semibold">{label}</span>
+    <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted font-semibold">{label}</span>
   </div>
 );
 
@@ -52,8 +52,8 @@ export const ControlRail: React.FC<ControlRailProps> = ({
           <Activity size={16} className="text-white" />
         </div>
         <div>
-          <div className="text-primary font-bold text-sm leading-tight">Z-Transform Echo</div>
-          <div className="text-muted text-[9px] font-mono tracking-widest uppercase">Janani Capstone</div>
+          <div className="text-primary font-bold text-lg leading-tight">Z-Transform Echo</div>
+          <div className="text-muted text-xs font-mono tracking-widest uppercase">Janani Capstone</div>
         </div>
       </div>
 
@@ -65,7 +65,7 @@ export const ControlRail: React.FC<ControlRailProps> = ({
           <div className="flex gap-2 mb-3">
             <button
               onClick={() => setPlaying(!playing)}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg font-mono font-bold text-[11px] transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg font-mono font-bold text-sm transition-all ${
                 playing ? 'bg-trace2/15 text-trace2 border border-trace2/30 hover:bg-trace2/25'
                         : 'bg-accent/15 text-accent border border-accent/35 hover:bg-accent/25'
               }`}
@@ -111,7 +111,7 @@ export const ControlRail: React.FC<ControlRailProps> = ({
             <SectionLabel icon={<Wand2 size={11} />} label="Echo Estimator & Canceller" />
             <button
               onClick={() => setCancellerOn(!cancellerOn)}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-full border text-[9px] font-mono font-bold uppercase transition-all ${
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full border text-xs font-mono font-bold uppercase transition-all ${
                 cancellerOn ? 'bg-accent/15 border-accent/40 text-accent'
                             : 'bg-border/10 border-border/25 text-muted'
               }`}
@@ -137,7 +137,7 @@ export const ControlRail: React.FC<ControlRailProps> = ({
 
           <button
             onClick={matchPerfectly}
-            className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-panelSolid border border-border/30 hover:border-accent/50 text-muted hover:text-primary transition-all font-mono text-[10px] font-bold uppercase"
+            className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-panelSolid border border-border/30 hover:border-accent/50 text-muted hover:text-primary transition-all font-mono text-sm font-bold uppercase"
           >
             <ArrowRightCircle size={14} className="text-accent" />
             Auto-Estimate Parameters

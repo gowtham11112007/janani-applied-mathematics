@@ -112,21 +112,21 @@ function EchoApp() {
         style={{ background: 'rgb(var(--c-panel) / 0.85)', backdropFilter: 'blur(20px)' }}
       >
         <div className="flex flex-col">
-          <span className="text-primary font-bold text-sm tracking-tight leading-tight">
+          <span className="text-primary font-bold text-xl tracking-tight leading-tight">
             Design of a Digital Echo Cancellation System
           </span>
-          <span className="text-muted text-[10px] font-mono mt-0.5">
+          <span className="text-muted text-sm font-mono mt-0.5">
             Using Z-Transforms — UBA0614 Applied Mathematics Capstone
           </span>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-muted text-[10px] font-mono hidden lg:block opacity-60">
+          <span className="text-muted text-sm font-mono hidden lg:block opacity-60">
             Janani Sri R & Lakshmi Shruthika
           </span>
           <button
             onClick={toggleTheme}
-            className="relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/30 font-mono text-[11px] font-semibold transition-all hover:border-accent/50 hover:shadow-neon-accent group"
+            className="relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/30 font-mono text-sm font-semibold transition-all hover:border-accent/50 hover:shadow-neon-accent group"
             style={{ background: 'rgb(var(--c-panel-solid) / 0.8)' }}
           >
             <span className={`transition-all duration-300 ${theme === 'dark' ? 'text-accent' : 'text-muted group-hover:text-accent'}`}>

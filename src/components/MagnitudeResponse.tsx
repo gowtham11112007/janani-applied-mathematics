@@ -65,7 +65,7 @@ export const MagnitudeResponse: React.FC<MagnitudeResponseProps> = ({
       }
 
       ctx.fillStyle = cssVar('--c-canvas-label');
-      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.font = '14px "JetBrains Mono", monospace';
       ctx.textAlign = 'left';
       ctx.fillText('Magnitude Response |H(e^jω)|', 10, 18);
 

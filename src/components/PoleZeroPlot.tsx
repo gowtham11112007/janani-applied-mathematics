@@ -62,7 +62,7 @@ export const PoleZeroPlot: React.FC<PoleZeroPlotProps> = ({
         
         if (count > 1) {
           ctx.fillStyle = color;
-          ctx.font = '10px "JetBrains Mono"';
+          ctx.font = '13px "JetBrains Mono"';
           ctx.fillText(`x${count}`, x + 8, y - 8);
         }
       };
@@ -100,7 +100,7 @@ export const PoleZeroPlot: React.FC<PoleZeroPlotProps> = ({
 
       // Labels
       ctx.fillStyle = cssVar('--c-canvas-label');
-      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.font = '14px "JetBrains Mono", monospace';
       ctx.textAlign = 'left';
       ctx.fillText('Pole-Zero: H(z) = 1 + αz⁻ᴰ', 10, 18);
 

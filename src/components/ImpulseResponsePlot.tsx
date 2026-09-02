@@ -71,7 +71,7 @@ export const ImpulseResponsePlot: React.FC<ImpulseResponsePlotProps> = ({
 
       // Label
       ctx.fillStyle = cssVar('--c-canvas-label');
-      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.font = '14px "JetBrains Mono", monospace';
       ctx.textAlign = 'left';
       ctx.fillText('Impulse Response: h[n] vs ĥ[n]', 10, 18);
 

@@ -46,15 +46,15 @@ export const HeroMetric: React.FC<HeroMetricProps> = ({ erle, alphaErr, delayErr
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-1 mb-0.5">
             <Activity size={11} className="text-muted" />
-            <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-muted">ERLE</span>
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted">ERLE</span>
           </div>
           <div
             className="font-mono font-bold leading-none tracking-tighter transition-colors duration-300"
-            style={{ fontSize: '3rem', color: erleColor, textShadow: `0 0 20px ${glowColor}` }}
+            style={{ fontSize: '4rem', color: erleColor, textShadow: `0 0 20px ${glowColor}` }}
           >
             {isFinite(erle) ? erle.toFixed(1) : '∞'}
           </div>
-          <div className="text-[8px] font-mono text-muted mt-0.5">dB · Echo Removal</div>
+          <div className="text-xs font-mono text-muted mt-0.5">dB · Echo Removal</div>
         </div>
 
         <div className="h-12 w-px bg-border/25 self-center" />
@@ -62,12 +62,12 @@ export const HeroMetric: React.FC<HeroMetricProps> = ({ erle, alphaErr, delayErr
         {/* Param Errors */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex justify-between items-center w-24">
-            <span className="text-[9px] font-mono text-muted uppercase">Δ Delay</span>
-            <span className={`text-[12px] font-mono font-bold ${delayErr === 0 ? 'text-trace1' : 'text-trace3'}`}>{delayErr}</span>
+            <span className="text-xs font-mono text-muted uppercase">Δ Delay</span>
+            <span className={`text-lg font-mono font-bold ${delayErr === 0 ? 'text-trace1' : 'text-trace3'}`}>{delayErr}</span>
           </div>
           <div className="flex justify-between items-center w-24">
-            <span className="text-[9px] font-mono text-muted uppercase">Δ Atten</span>
-            <span className={`text-[12px] font-mono font-bold ${alphaErr < 0.05 ? 'text-trace1' : 'text-trace3'}`}>{alphaErr.toFixed(2)}</span>
+            <span className="text-xs font-mono text-muted uppercase">Δ Atten</span>
+            <span className={`text-lg font-mono font-bold ${alphaErr < 0.05 ? 'text-trace1' : 'text-trace3'}`}>{alphaErr.toFixed(2)}</span>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ export const HeroMetric: React.FC<HeroMetricProps> = ({ erle, alphaErr, delayErr
 
         {/* Status */}
         <div className="flex flex-col items-center z-10">
-          <div className="text-[8px] font-mono uppercase tracking-[0.2em] text-muted mb-1.5">Model Status</div>
+          <div className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-1.5">Model Status</div>
           <div
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border font-mono font-bold text-xs transition-all duration-500"
             style={{ color, backgroundColor: bg, borderColor: border }}

@@ -69,7 +69,7 @@ export const TapWeightsPlot: React.FC<TapWeightsPlotProps> = ({
 
         // Index label
         ctx.fillStyle = cssVar('--c-canvas-legend');
-        ctx.font = '9px "JetBrains Mono"';
+        ctx.font = '15px "JetBrains Mono"';
         ctx.textAlign = 'center';
         ctx.fillText(`k=${i}`, xCenter, height - 4);
       }
@@ -77,11 +77,11 @@ export const TapWeightsPlot: React.FC<TapWeightsPlotProps> = ({
       // Title
       ctx.textAlign = 'left';
       ctx.fillStyle = cssVar('--c-canvas-label');
-      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.font = '14px "JetBrains Mono", monospace';
       ctx.fillText(title, 10, 18);
 
       // Legend
-      ctx.font = '10px "JetBrains Mono"';
+      ctx.font = '13px "JetBrains Mono"';
       ctx.fillStyle = cssVar('--c-canvas-bar-true');
       ctx.fillRect(width - 118, 9, 10, 10);
       ctx.fillStyle = cssVar('--c-canvas-legend');

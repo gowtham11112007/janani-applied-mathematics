@@ -18,8 +18,8 @@ export const Fader: React.FC<FaderProps> = ({
   return (
     <div className="flex flex-col w-full">
       <div className="flex justify-between items-center mb-0.5">
-        <label className="text-[9px] font-mono text-muted uppercase tracking-widest">{label}</label>
-        <span className="text-[10px] font-mono text-primary bg-panelSolid/60 px-1 py-px rounded border border-border/25">
+        <label className="text-xs font-mono text-muted uppercase tracking-widest">{label}</label>
+        <span className="text-sm font-mono text-primary bg-panelSolid/60 px-1 py-px rounded border border-border/25">
           {formatValue(value)}
         </span>
       </div>
