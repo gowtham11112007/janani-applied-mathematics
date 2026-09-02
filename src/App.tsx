@@ -6,7 +6,8 @@ import { MagnitudeResponse } from './components/MagnitudeResponse';
 import { PoleZeroPlot } from './components/PoleZeroPlot';
 import { HeroMetric } from './components/HeroMetric';
 import { SystemEquations } from './components/SystemEquations';
-import { SignalGenerator, DelayLine, MetricCalculator } from './dsp/EchoCanceller';
+import { SignalGenerator, DelayLine, MetricCalculator, AdaptiveFilter } from './dsp/EchoCanceller';
+import { TapWeightsPlot } from './components/TapWeightsPlot';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 
@@ -19,6 +20,7 @@ function EchoApp() {
   // ── UI State ────────────────────────────────────────────────────────────────
   const [playing, setPlaying]         = useState(true);
   const [cancellerOn, setCancellerOn] = useState(true);
+  const [adaptiveMode, setAdaptiveMode] = useState(false);
   
   const [trueDelay, setTrueDelay]     = useState(15);
   const [trueAlpha, setTrueAlpha]     = useState(0.6);
@@ -42,6 +44,7 @@ function EchoApp() {
     sigGen:     new SignalGenerator(),
     roomDelay:  new DelayLine(100),
     estDelay:   new DelayLine(100),
+    adaptive:   new AdaptiveFilter(50, 0.05),
     metric:     new MetricCalculator(),
   });
 
@@ -65,11 +68,15 @@ function EchoApp() {
           const d = x + roomEcho + noise;
 
           // Estimated Echo (Canceller)
-          const estimatedEcho = cancellerOn ? estDelayLine.process(x, estDelay, estAlpha) : 0;
-          
-          // Note: Estimated echo signal uses its own delay line, but since they process the same 'x', 
-          // we must ensure they stay synchronized or just compute it cleanly. 
-          // Actually, our DelayLine writes 'x' every step. It's safe!
+          let estimatedEcho = 0;
+          if (cancellerOn) {
+            if (adaptiveMode) {
+              const res = dsp.current.adaptive.process(x, d);
+              estimatedEcho = res.estimatedEcho;
+            } else {
+              estimatedEcho = estDelayLine.process(x, estDelay, estAlpha);
+            }
+          }
           
           const e = d - estimatedEcho;
 
@@ -86,17 +93,23 @@ function EchoApp() {
         }
 
         setErle(cancellerOn ? latestErle : 0);
+        if (adaptiveMode && cancellerOn && Math.random() < 0.05) { // update UI occasionally
+          const { estDelay: ad, estAlpha: aa } = dsp.current.adaptive.getEstimatedDelayAndAlpha();
+          setEstDelay(ad);
+          setEstAlpha(aa);
+        }
       }
       animationId = requestAnimationFrame(loop);
     };
 
     animationId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animationId);
-  }, [playing, cancellerOn, trueDelay, trueAlpha, estDelay, estAlpha]);
+  }, [playing, cancellerOn, trueDelay, trueAlpha, estDelay, estAlpha, adaptiveMode]);
 
   const handleReset = useCallback(() => {
     dsp.current.roomDelay = new DelayLine(100);
     dsp.current.estDelay = new DelayLine(100);
+    dsp.current.adaptive = new AdaptiveFilter(50, 0.05);
     dsp.current.metric = new MetricCalculator();
     setErle(0);
     plotData.current.x.fill(0);
@@ -146,6 +159,7 @@ function EchoApp() {
           estDelay={estDelay} setEstDelay={setEstDelay}
           estAlpha={estAlpha} setEstAlpha={setEstAlpha}
           cancellerOn={cancellerOn} setCancellerOn={setCancellerOn}
+          adaptiveMode={adaptiveMode} setAdaptiveMode={setAdaptiveMode}
           playing={playing} setPlaying={setPlaying}
           reset={handleReset}
         />
@@ -191,10 +205,21 @@ function EchoApp() {
               trueAlpha={trueAlpha} trueDelay={trueDelay}
               estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
             />
-            <PoleZeroPlot
-              trueAlpha={trueAlpha} trueDelay={trueDelay}
-              estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
-            />
+            {adaptiveMode ? (
+              <TapWeightsPlot 
+                trueTaps={(() => {
+                  const arr = Array(40).fill(0);
+                  if (trueDelay < 40) arr[trueDelay] = trueAlpha;
+                  return arr;
+                })()}
+                estimatedTaps={Array.from(dsp.current.adaptive.weights).slice(0, 40)}
+              />
+            ) : (
+              <PoleZeroPlot
+                trueAlpha={trueAlpha} trueDelay={trueDelay}
+                estAlpha={cancellerOn ? estAlpha : 0} estDelay={estDelay}
+              />
+            )}
           </div>
 
           <div className="shrink-0 mt-3">

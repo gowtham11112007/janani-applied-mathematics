@@ -13,6 +13,8 @@ interface ControlRailProps {
   setEstAlpha: (val: number) => void;
   cancellerOn: boolean;
   setCancellerOn: (val: boolean) => void;
+  adaptiveMode: boolean;
+  setAdaptiveMode: (val: boolean) => void;
   playing: boolean;
   setPlaying: (val: boolean) => void;
   reset: () => void;
@@ -33,14 +35,11 @@ export const ControlRail: React.FC<ControlRailProps> = ({
   estDelay, setEstDelay,
   estAlpha, setEstAlpha,
   cancellerOn, setCancellerOn,
+  adaptiveMode, setAdaptiveMode,
   playing, setPlaying,
   reset,
 }) => {
-  const matchPerfectly = () => {
-    setEstDelay(trueDelay);
-    setEstAlpha(trueAlpha);
-    setCancellerOn(true);
-  };
+  
 
   return (
     <aside
@@ -124,23 +123,27 @@ export const ControlRail: React.FC<ControlRailProps> = ({
             <Fader
               label="Est. Delay D̂"
               value={estDelay} min={1} max={40} step={1}
-              onChange={setEstDelay}
+              onChange={(v) => !adaptiveMode && setEstDelay(v)}
               accentClass="accent-trace4"
             />
             <Fader
               label="Est. Attenuation α̂"
               value={estAlpha} min={-1} max={1} step={0.05}
-              onChange={setEstAlpha}
+              onChange={(v) => !adaptiveMode && setEstAlpha(v)}
               accentClass="accent-trace4"
             />
           </div>
 
           <button
-            onClick={matchPerfectly}
-            className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-panelSolid border border-border/30 hover:border-accent/50 text-muted hover:text-primary transition-all font-mono text-sm font-bold uppercase"
+            onClick={() => setAdaptiveMode(!adaptiveMode)}
+            className={`w-full flex items-center justify-center gap-2 py-2 rounded-lg border transition-all font-mono text-sm font-bold uppercase ${
+              adaptiveMode 
+                ? 'bg-accent/20 border-accent/60 text-accent shadow-neon-accent'
+                : 'bg-panelSolid border-border/30 hover:border-accent/50 text-muted hover:text-primary'
+            }`}
           >
-            <ArrowRightCircle size={14} className="text-accent" />
-            Auto-Estimate Parameters
+            <ArrowRightCircle size={14} className={adaptiveMode ? "text-accent animate-pulse" : "text-muted"} />
+            {adaptiveMode ? 'LMS Adaptive Mode ON' : 'Enable LMS Adaptive Filter'}
           </button>
         </div>
 
